@@ -22,19 +22,23 @@ function TextForm(props) {
         updateText(newText);
     };
 
+    // text copy function
     const handleCopyClick = () => {
         navigator.clipboard.writeText(history[currentIndex]);
     };
 
+    // text paste function
     const handlePasteClick = async () => {
         const text = await navigator.clipboard.readText();
         updateText(history[currentIndex] + text); // Append pasted text
     };
 
+    // spell and garamar checking function
     const handleSpellCheckClick = () => {
         setIsSpellCheck(!isSpellCheck);
     };
 
+    //speak function
     const speak = () => {
         let msg = new SpeechSynthesisUtterance();
         msg.text = history[currentIndex];
@@ -42,37 +46,36 @@ function TextForm(props) {
     };
 
     const handleOnChange = (event) => {
+
+
         updateText(event.target.value);
     };
 
-    // Undo and redo functions
+    // Undo functions
     const undo = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
         }
     };
 
+    // Redo function
     const redo = () => {
         if (currentIndex < history.length - 1) {
             setCurrentIndex(currentIndex + 1);
         }
     };
 
+   
+
     return (
         <>
-            <div className='container mt-3'>
+            <div className={`container mt-3V text-${props.mode === 'light' ? 'dark' : 'light'}`}>
                 <div className="form-group">
                     <h1>Enter your Text here:</h1>
-                    <textarea 
-                        className='form-control' 
-                        value={history[currentIndex]} 
-                        onChange={handleOnChange} 
-                        id="myBox" 
-                        rows={8} 
-                        spellCheck={isSpellCheck}
-                        key={isSpellCheck} // Force re-render when spell check state changes
-                    ></textarea>
+                    { /* <textarea value={text} onChange={handleOnChange}></textarea> */ }
+                    <textarea className='form-control' value={history[currentIndex]} onChange={handleOnChange} id="myBox" rows={6} spellCheck={isSpellCheck} key={isSpellCheck}></textarea>
                 </div>
+
                 <button type="button" onClick={speak} className="btn mt-3 btn-warning">Speak</button>
                 <button type="button" className="btn mt-3 btn-primary mx-3" onClick={handleUpClick}>UpperCase</button>
                 <button type="button" className="btn mt-3 btn-primary" onClick={handleLowClick}>LowerCase</button>
@@ -87,12 +90,13 @@ function TextForm(props) {
                 </button>
             </div>
 
-            <div className="container my-3">
+            <div className={`container my-3 text-${props.mode === 'light' ? 'dark' : 'light'}`}>
                 <h4>Your text summary</h4>
                 <p>{history[currentIndex].split(" ").length} words, {history[currentIndex].length} characters</p>
                 <p>{0.008 * history[currentIndex].split(" ").length} Minutes required to read</p>
                 <h3>Preview</h3>
                 <p>{history[currentIndex]}</p>
+                {/* <p>{text.lenght>0?text:"Enter your text in above text-box to preview it here!"}</p> */}
             </div>
         </>
     );

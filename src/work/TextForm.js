@@ -45,9 +45,8 @@ function TextForm(props) {
         window.speechSynthesis.speak(msg);
     };
 
+    // Preview value
     const handleOnChange = (event) => {
-
-
         updateText(event.target.value);
     };
 
@@ -65,14 +64,15 @@ function TextForm(props) {
         }
     };
 
-   
+
 
     return (
         <>
             <div className={`container mt-3V text-${props.mode === 'light' ? 'dark' : 'light'}`}>
+
                 <div className="form-group">
                     <h1>Enter your Text here:</h1>
-                    { /* <textarea value={text} onChange={handleOnChange}></textarea> */ }
+                    { /* <textarea value={text} onChange={handleOnChange}></textarea> */}
                     <textarea className='form-control' value={history[currentIndex]} onChange={handleOnChange} id="myBox" rows={6} spellCheck={isSpellCheck} key={isSpellCheck}></textarea>
                 </div>
 
@@ -86,13 +86,13 @@ function TextForm(props) {
                 <button type="button" className='btn mt-3 btn-dark' onClick={handleCopyClick}>Copy</button>
                 <button type="button" className='btn mt-3 btn-dark mx-3' onClick={handlePasteClick}>Paste</button>
                 <button type="button" className="btn mt-3 btn-secondary" onClick={handleSpellCheckClick}>
-                    {isSpellCheck ? 'SpellCheck Enabled' : 'SpellCheck Disabled'}
-                </button>
-            </div>
+                    {isSpellCheck ? 'SpellCheck Enabled' : 'SpellCheck Disabled'}</button>
 
+            </div>
+ 
             <div className={`container my-3 text-${props.mode === 'light' ? 'dark' : 'light'}`}>
                 <h4>Your text summary</h4>
-                <p>{history[currentIndex].split(" ").length} words, {history[currentIndex].length} characters</p>
+                <p>{history[currentIndex].split(" ").length - 1} words, {history[currentIndex].length} characters</p>
                 <p>{0.008 * history[currentIndex].split(" ").length} Minutes required to read</p>
                 <h3>Preview</h3>
                 <p>{history[currentIndex]}</p>
